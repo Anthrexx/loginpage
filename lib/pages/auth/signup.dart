@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login/Widgets/round_button.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:login/pages/auth/emailverification.dart';
 import 'package:login/pages/auth/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rive/rive.dart';
@@ -128,6 +129,7 @@ class _SignUpState extends State<SignUp> {
                                 BorderSide(color: Colors.green, width: 1),
                             borderRadius: BorderRadius.circular(15)),
                       ),
+                      maxLength: 30,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Enter Email";
@@ -165,6 +167,7 @@ class _SignUpState extends State<SignUp> {
                                 BorderSide(color: Colors.green, width: 1),
                             borderRadius: BorderRadius.circular(15)),
                       ),
+                      maxLength: 8,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Enter Email";
@@ -239,6 +242,13 @@ class _SignUpState extends State<SignUp> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      String _email = emailController.text;
+      String _password = passwordController.text;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  VerifyEmailPage(email: _email, password: _password)));
     } on FirebaseAuthException catch (e) {
       print(e);
 

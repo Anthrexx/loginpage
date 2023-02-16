@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:login/Widgets/round_button.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:login/pages/auth/forgotpassword.dart';
 import 'package:login/pages/auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:login/utils/utils.dart';
@@ -53,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    
     super.dispose();
     emailFocusNode.removeListener(emailFocus);
     passwordFocusNode.removeListener(passwordFocus);
@@ -94,8 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: _fromKey,
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 100,
+                      const SizedBox(
+                        height: 80,
                       ),
                       SizedBox(
                         height: 250,
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         // },
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          hintText: "Email",
+                          hintText: "Enter roll no",
                           prefixIcon: Icon(Icons.email_rounded),
                           enabledBorder: OutlineInputBorder(
                               borderSide:
@@ -140,16 +140,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                   BorderSide(color: Colors.green, width: 1),
                               borderRadius: BorderRadius.circular(15)),
                         ),
-        
+                        onChanged: (value) {
+                          numLook?.change(value.length.toDouble());
+                        },
+                        maxLength: 30,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Enter Email";
+                            return "Enter roll no";
                           } else {
                             return null;
                           }
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextFormField(
@@ -178,6 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   BorderSide(color: Colors.green, width: 1),
                               borderRadius: BorderRadius.circular(15)),
                         ),
+                        maxLength: 8,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Enter Email";
@@ -189,20 +193,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ForgotPassword()));
+                        },
+                        child: const Text("forgot password"))
+                  ],
+                ),
+                const SizedBox(height: 30),
                 //button
                 RoundButton(
                   title: "login",
                   ontap: () {
-                     passwordFocusNode.unfocus();
+                    passwordFocusNode.unfocus();
                     emailFocusNode.unfocus();
                     if (_fromKey.currentState!.validate()) {
                       trigSuccess?.change(true);
                       login();
-                      
                     } else {
                       trigFail?.change(true);
-                     
                     }
                   },
                 ),
@@ -210,14 +226,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account ?"),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SignUp()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
                         },
-                        child: Text("Sign Up"))
+                        child: const Text("Create Account"))
                   ],
                 ),
               ],
