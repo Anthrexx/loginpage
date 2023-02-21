@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:login/pages/screen/profilePage.dart';
 import 'package:login/pages/splash_screen.dart';
-
+import 'package:login/pages/screen/profilePage.dart';
 
 
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
 theme: ThemeData(
   primarySwatch: Colors.blueGrey,
 ),
-      home: SplashScreen(),
+      home:const  profile(),
     );
   }
 }
