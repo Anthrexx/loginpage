@@ -11,6 +11,7 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  int posts = 21;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -63,7 +64,12 @@ class _profileState extends State<profile> {
                     child: Card(
                       shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      child: ClipRRect(borderRadius: BorderRadius.circular(20),child: Image.asset("assets/profile.jpg",fit: BoxFit.cover,)),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            "assets/profile.jpg",
+                            fit: BoxFit.cover,
+                          )),
                     ),
                   ),
                 ],
@@ -95,7 +101,9 @@ class _profileState extends State<profile> {
                     child: Container(
                       height: 30,
                       width: 30,
-                      child: Image.asset("assets/insta-removebg-preview.png",),
+                      child: Image.asset(
+                        "assets/pngwing.com (1).png",
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -104,7 +112,7 @@ class _profileState extends State<profile> {
                   InkWell(
                     onTap: () {},
                     child: Container(
-                      child: Image.asset("assets/ln.png"),
+                      child: Image.asset("assets/ln.png",fit: BoxFit.cover,),
                       height: 30,
                       width: 30,
                     ),
@@ -136,14 +144,16 @@ class _profileState extends State<profile> {
               Row(
                 children: [
                   Padding(padding: EdgeInsetsDirectional.only(end: 90)),
-                  Text("20",
+                  Text("$posts",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: 20)),
                   Spacer(),
                   Container(
-                    child: Image.asset("assets/tr.png"),
+                    child: Image.asset(
+                      "assets/tr.png",
+                    ),
                     height: 30,
                     width: 30,
                   ),
@@ -185,7 +195,9 @@ class _profileState extends State<profile> {
               // ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: Gridview(),
+                child: Gridview(
+                  posts: posts,
+                ),
               ),
             ],
           ),
@@ -197,8 +209,8 @@ class _profileState extends State<profile> {
 
 @override
 class Gridview extends StatefulWidget {
-  const Gridview({super.key});
-
+  final posts;
+  const Gridview({super.key, required this.posts});
   @override
   State<Gridview> createState() => _GridviewState();
 }
@@ -210,20 +222,28 @@ class _GridviewState extends State<Gridview> {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 15.0, mainAxisSpacing: 12,mainAxisExtent: 250),
-        itemCount: 20,
+            crossAxisCount: 2,
+            crossAxisSpacing: 15.0,
+            mainAxisSpacing: 12,
+            mainAxisExtent: 250),
+        itemCount: widget.posts,
         itemBuilder: (_, index) {
           return Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.greenAccent),
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset('assets/profile.jpg',height: 250,width: double.infinity,fit: BoxFit.cover,)),
-                  ],
-                ),
+            child: Column(
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      'assets/profile.jpg',
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )),
+              ],
+            ),
           );
         });
   }
