@@ -18,7 +18,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
-
+  FocusNode confirmPasswordFocusNode = FocusNode();
   StateMachineController? controller;
 
   SMIInput<bool>? isChecking;
@@ -30,6 +30,7 @@ class _SignUpState extends State<SignUp> {
   final _fromKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   var obsecureText = true;
   bool loading = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,6 +39,7 @@ class _SignUpState extends State<SignUp> {
   void initState() {
     emailFocusNode.addListener(emailFocus);
     passwordFocusNode.addListener(passwordFocus);
+    confirmPasswordFocusNode.addListener(confirmpasswordFocus);
   }
 
   void VailidEmail() {
@@ -56,8 +58,10 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
     emailFocusNode.removeListener(emailFocus);
     passwordFocusNode.removeListener(passwordFocus);
+    confirmPasswordFocusNode.removeListener(confirmpasswordFocus);
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
   }
 
   void emailFocus() {
@@ -68,15 +72,14 @@ class _SignUpState extends State<SignUp> {
     isHandsUp?.change(passwordFocusNode.hasFocus);
   }
 
+  void confirmpasswordFocus() {
+    isHandsUp?.change(passwordFocusNode.hasFocus);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD6E2EA),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text("Sign Up"),
-        centerTitle: true,
-      ),
+      backgroundColor: const Color.fromARGB(255, 3, 0, 28),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -95,7 +98,7 @@ class _SignUpState extends State<SignUp> {
                       height: 250,
                       width: 250,
                       child: RiveAnimation.asset(
-                        "assets/2244-4437-animated-login-screen.riv",
+                        "assets/animated_login_character.riv",
                         fit: BoxFit.fitHeight,
                         stateMachines: const ["Login Machine"],
                         onInit: (artboard) {
@@ -109,25 +112,52 @@ class _SignUpState extends State<SignUp> {
                           numLook = controller?.findInput("numLook");
                           isHandsUp = controller?.findInput("isHandsUp");
                           trigSuccess = controller?.findInput("trigSuccess");
-                          trigFail = controller?.findInput("trigFail");
+                          trigFail = controller?.findInput("trigSuccess");
                         },
                       ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: const [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 0, 214, 252),
+                            fontSize: 40,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
                     ),
                     TextFormField(
                       controller: emailController,
                       focusNode: emailFocusNode,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: "Email",
-                        prefixIcon: Icon(Icons.email_rounded),
+                        hintText: "Enter roll no",
+                        hintStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(
+                          Icons.email_rounded,
+                          color: Colors.white,
+                        ),
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blueGrey, width: 1),
-                            borderRadius: BorderRadius.circular(10)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1),
+                            borderSide: BorderSide(width: 0),
                             borderRadius: BorderRadius.circular(15)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 0),
+                            borderRadius: BorderRadius.circular(15)),
+                        filled: true,
+                        fillColor: Color.fromARGB(77, 217, 217, 217),
+                        counterText: '',
                       ),
                       maxLength: 30,
                       validator: (value) {
@@ -138,16 +168,20 @@ class _SignUpState extends State<SignUp> {
                         }
                       },
                     ),
-                    SizedBox(
-                      height: 20,
+                    const SizedBox(
+                      height: 25,
                     ),
                     TextFormField(
                       controller: passwordController,
                       focusNode: passwordFocusNode,
                       obscureText: obsecureText,
                       decoration: InputDecoration(
-                        hintText: "password",
-                        prefixIcon: Icon(Icons.key_outlined),
+                        hintText: "Enter password",
+                        hintStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(
+                          Icons.key_outlined,
+                          color: Colors.white,
+                        ),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -155,22 +189,71 @@ class _SignUpState extends State<SignUp> {
                             });
                           },
                           child: obsecureText
-                              ? const Icon(Icons.visibility_off)
-                              : Icon(Icons.visibility),
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.white,
+                                )
+                              : Icon(
+                                  Icons.visibility,
+                                  color: Colors.white,
+                                ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blueGrey, width: 1),
-                            borderRadius: BorderRadius.circular(10)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 1),
+                            borderSide: BorderSide(width: 0),
                             borderRadius: BorderRadius.circular(15)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 0),
+                            borderRadius: BorderRadius.circular(15)),
+                        filled: true,
+                        fillColor: Color.fromARGB(77, 217, 217, 217),
+                        counterText: '',
                       ),
                       maxLength: 8,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Enter Email";
+                          return "Enter password";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    TextFormField(
+                      controller: confirmPasswordController,
+                      focusNode: confirmPasswordFocusNode,
+                      obscureText: obsecureText,
+                      decoration: InputDecoration(
+                        hintText: "Re-enter password",
+                        hintStyle: TextStyle(color: Colors.white),
+                        prefixIcon:
+                            Icon(Icons.key_outlined, color: Colors.white),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              obsecureText = !obsecureText;
+                            });
+                          },
+                          child: obsecureText
+                              ? const Icon(Icons.visibility_off,
+                                  color: Colors.white)
+                              : Icon(Icons.visibility, color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 0),
+                            borderRadius: BorderRadius.circular(10)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 0),
+                            borderRadius: BorderRadius.circular(15)),
+                        filled: true,
+                        fillColor: Color.fromARGB(77, 217, 217, 217),
+                        counterText: '',
+                      ),
+                      maxLength: 8,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Confirm password";
                         } else {
                           return null;
                         }
@@ -179,7 +262,7 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 60),
               //button
               RoundButton(
                 title: "Sign Up",
@@ -195,10 +278,15 @@ class _SignUpState extends State<SignUp> {
                   }
                 },
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Already have an account ?"),
+                  const Text(
+                    "Already have an account?",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
                   TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -206,7 +294,12 @@ class _SignUpState extends State<SignUp> {
                             MaterialPageRoute(
                                 builder: (context) => LoginScreen()));
                       },
-                      child: Text("login"))
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 0, 214, 252),
+                            fontWeight: FontWeight.w500),
+                      ))
                 ],
               ),
             ],

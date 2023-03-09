@@ -5,6 +5,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:login/pages/auth/forgotpassword.dart';
 import 'package:login/pages/auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:login/pages/screen/profilePage.dart';
 import 'package:login/utils/utils.dart';
 import 'package:rive/rive.dart';
 
@@ -77,12 +78,12 @@ class _LoginScreenState extends State<LoginScreen> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFFD6E2EA),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text("login"),
-          centerTitle: true,
-        ),
+        backgroundColor: const Color.fromARGB(255, 3, 0, 28),
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   title: Text("login"),
+        //   centerTitle: true,
+        // ),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -95,13 +96,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       const SizedBox(
-                        height: 80,
+                        height: 100,
                       ),
                       SizedBox(
                         height: 250,
                         width: 250,
                         child: RiveAnimation.asset(
-                          "assets/2244-4437-animated-login-screen.riv",
+                          "assets/animated_login_character.riv",
                           fit: BoxFit.fitHeight,
                           stateMachines: const ["Login Machine"],
                           onInit: (artboard) {
@@ -115,9 +116,29 @@ class _LoginScreenState extends State<LoginScreen> {
                             numLook = controller?.findInput("numLook");
                             isHandsUp = controller?.findInput("isHandsUp");
                             trigSuccess = controller?.findInput("trigSuccess");
-                            trigFail = controller?.findInput("trigFail");
+                            trigFail = controller?.findInput("trigSuccess");
                           },
                         ),
+                      ),
+                    const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: const[
+                          SizedBox(width: 10,),
+                           Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 0, 214, 252),
+                              fontSize: 40,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                     const SizedBox(
+                        height: 30,
                       ),
                       TextFormField(
                         controller: emailController,
@@ -128,18 +149,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         //   });
                         // },
                         keyboardType: TextInputType.emailAddress,
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           hintText: "Enter roll no",
-                          prefixIcon: Icon(Icons.email_rounded),
+                          hintStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Icon(
+                            Icons.email_rounded,
+                            color: Colors.white,
+                          ),
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.blueGrey, width: 1),
-                              borderRadius: BorderRadius.circular(10)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 1),
+                              borderSide: BorderSide(width: 0),
                               borderRadius: BorderRadius.circular(15)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 0),
+                              borderRadius: BorderRadius.circular(15)),
+                          filled: true,
+                          fillColor: Color.fromARGB(77, 217, 217, 217),
+                          counterText: '',
                         ),
+
                         onChanged: (value) {
                           numLook?.change(value.length.toDouble());
                         },
@@ -153,15 +182,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 25,
                       ),
                       TextFormField(
                         controller: passwordController,
                         focusNode: passwordFocusNode,
                         obscureText: obsecureText,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          hintText: "password",
-                          prefixIcon: Icon(Icons.key_outlined),
+                          hintText: "Enter password",
+                          hintStyle: TextStyle(color: Colors.white),
+                          prefixIcon: Icon(
+                            Icons.key_outlined,
+                            color: Colors.white,
+                          ),
                           suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -169,22 +203,29 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             },
                             child: obsecureText
-                                ? const Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility),
+                                ? const Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    Icons.visibility,
+                                    color: Colors.white,
+                                  ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.blueGrey, width: 1),
-                              borderRadius: BorderRadius.circular(10)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 1),
+                              borderSide: BorderSide(width: 0),
                               borderRadius: BorderRadius.circular(15)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 0),
+                              borderRadius: BorderRadius.circular(15)),
+                          filled: true,
+                          fillColor: Color.fromARGB(77, 217, 217, 217),
+                          counterText: '',
                         ),
                         maxLength: 8,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Enter Email";
+                            return "Enter Password";
                           } else {
                             return null;
                           }
@@ -193,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -202,15 +243,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const ForgotPassword()));
+                                  builder: (context) =>
+                                      const ForgotPassword()));
                         },
-                        child: const Text("forgot password"))
+                        child: const Text(
+                          "Forgot password?",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
+                        ))
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 65),
                 //button
                 RoundButton(
-                  title: "login",
+                  title: "Sign In",
                   ontap: () {
                     passwordFocusNode.unfocus();
                     emailFocusNode.unfocus();
@@ -223,7 +269,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +281,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               MaterialPageRoute(
                                   builder: (context) => SignUp()));
                         },
-                        child: const Text("Create Account"))
+                        child: const Text(
+                          "Create Account",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
+                        ))
                   ],
                 ),
               ],
@@ -258,6 +308,8 @@ class _LoginScreenState extends State<LoginScreen> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      Navigator.push(
+          context, MaterialPageRoute(builder: ((context) => const profile())));
     } on FirebaseAuthException catch (e) {
       print(e);
 

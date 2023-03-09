@@ -137,6 +137,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
 class MessagePage extends StatelessWidget {
   const MessagePage({super.key});
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +150,11 @@ class MessagePage extends StatelessWidget {
           Container(
               width: 291,
               height: 172,
+              
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
+                color: const Color.fromARGB(254, 30, 50, 53),
+                border: Border.all( color: Color.fromARGB(254, 0, 214, 252),width: 0)
               ),
               child: Column(
                 children: [
@@ -165,12 +168,16 @@ class MessagePage extends StatelessWidget {
                       child: FittedBox(
                         fit: BoxFit.contain,
                         child: Text(
-                            'An email to reset your password has\n     been sent to the entered email\n                        address.'),
+                            'An email to reset your password\n     has been sent to the entered\n                   email address.',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
                       ),
                     ),
                   ),
                   const SizedBox(
                     height: 26,
+                    
+                  ),
+                  const Divider(
+                    color: Color.fromARGB(254, 0, 214, 252),
                   ),
                   SizedBox(
                     child: GestureDetector(
@@ -187,12 +194,12 @@ class MessagePage extends StatelessWidget {
                           Icon(
                             Icons.arrow_back,
                             size: 22,
-                            color: Colors.black,
+                            color:  Color.fromARGB(254, 121, 255, 249),
                           ),
                           Text(
                             'Back to sign in',
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Color.fromARGB(254, 121, 255, 249),
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600),
                           ),

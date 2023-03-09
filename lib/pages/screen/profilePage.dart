@@ -1,6 +1,9 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:login/pages/screen/editProfile.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 // ignore: camel_case_types
 class profile extends StatefulWidget {
@@ -27,7 +30,10 @@ class _profileState extends State<profile> {
           centerTitle: true,
           leading: Column(children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => EditProfile())));
+                },
                 icon: Icon(
                   Icons.mode_edit_outlined,
                   size: 20,
@@ -97,7 +103,10 @@ class _profileState extends State<profile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString(
+                          "https://www.instagram.com/appteam_nith/");
+                    },
                     child: Container(
                       height: 30,
                       width: 30,
@@ -112,7 +121,10 @@ class _profileState extends State<profile> {
                   InkWell(
                     onTap: () {},
                     child: Container(
-                      child: Image.asset("assets/ln.png",fit: BoxFit.cover,),
+                      child: Image.asset(
+                        "assets/ln.png",
+                        fit: BoxFit.cover,
+                      ),
                       height: 30,
                       width: 30,
                     ),

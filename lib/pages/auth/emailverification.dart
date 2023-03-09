@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'login_screen.dart';
+
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage(
-      {super.key, required this.email, required this.password});
+      {super.key, required this.email,required this.password});
   final String email;
   final String password;
   @override
@@ -76,87 +78,73 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    
     return Container(
-        color: const Color.fromARGB(254, 3, 0, 28),
+        color: const Color.fromARGB(255, 3, 0, 28),
+        
         child: Scaffold(
-          bottomSheet: Container(
-            height: MediaQuery.of(context).size.height * .15,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 12, 86, 146),
-              // image: DecorationImage(
-              //     fit: BoxFit.fill,
-              //     image: AssetImage("assets/images/loginvector.png"))
-            ),
-          ),
+         
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            automaticallyImplyLeading: true,
-          ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "A verification email has been sent to your College Email.",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  SizedBox(
-                    width: size.width * .5,
-                    height: size.height * .05,
-                    child: ElevatedButton(
-                        onPressed:
-                            canResendEmail ? sendVerificationEmail : null,
-                        style: ElevatedButton.styleFrom(
-                            splashFactory: NoSplash.splashFactory,
-                            backgroundColor:
-                                const Color.fromARGB(254, 28, 111, 125),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                        child: const Text(
-                          'Resent Email',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  SizedBox(
-                    width: size.width * .3,
-                    height: size.height * .05,
-                    child: TextButton(
-                      onPressed: (() async {
-                        await FirebaseAuth.instance.signOut();
-                      }),
-                      style: ElevatedButton.styleFrom(
-                          splashFactory: NoSplash.splashFactory,
-                          backgroundColor:
-                              const Color.fromARGB(255, 66, 57, 140),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25))),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(fontSize: 22, color: Colors.white),
+          body: 
+             Center(
+              child: Container(
+                height: 340,
+                width: 280,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: const Color.fromARGB(255, 30, 50, 53)
+                ),
+                child: Column(
+                  
+                  children:  [
+                 const   Icon(Icons.check_circle,size: 180,color: Color.fromARGB(255, 90, 209, 34),),
+                    const Text(
+                      "A verify link has been successfully send to your registered email address.",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  const  SizedBox(height: 19,),
+                   const Divider(
+                      color: Color.fromARGB(255, 0, 214, 252),
+                    ),
+                   const SizedBox(height: 10,),
+                    SizedBox(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => const LoginScreen())),
+                            (route) => false);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.arrow_back,
+                            size: 22,
+                            color:  Color.fromARGB(254, 121, 255, 249),
+                          ),
+                          Text(
+                            'Back to sign in',
+                            style: TextStyle(
+                                color: Color.fromARGB(254, 121, 255, 249),
+                                fontSize: 22,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
+                  ),
+                    
+                  ],
+                ),
               ),
             ),
-          ),
+          
         ));
   }
 }
